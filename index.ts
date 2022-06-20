@@ -1,34 +1,27 @@
-import { createWriteStream, write } from "fs";
+import Jimp from "jimp";
 import robot from "robotjs";
 
-// Speed up the mouse.
-// robot.setMouseDelay(2);
-
-// var twoPI = Math.PI * 2.0;
-// var screenSize = robot.getScreenSize();
-// var height = screenSize.height / 2 - 10;
-// var width = screenSize.width;
-
-// for (var x = 0; x < width; x++) {
-//   let y = height * Math.sin((twoPI * x) / width) + height;
-//   robot.moveMouse(x, y);
-// }
 function PrintScreen() {
-  let size = robot.getScreenSize();
+  let pos = robot.getMousePos();
+  let bitmap = robot.screen.capture(pos.x - 100, pos.y - 100, 200, 200).image;
 
-  let b = robot.screen.capture(0, 0, size.width, size.height);
-
-  return b.image;
-  //   let Write = createWriteStream("C:\\Users\\User\\Desktop\\screen.bmp");
-
-  //   Write.write(b.image.toString("base64"));
+  return new Promise((res, rej) => {
+    new Jimp({ data: bitmap, width: 200, height: 200 }, (err: any, image: any) => {
+      image.getBuffer(Jimp.MIME_PNG, (err: any, buffer: any) => {       
+        res(buffer.toString("base64"));
+      });
+    });
+  });
 }
 
 function MouseMove(mX: number = 0, mY: number = 0) {
   robot.moveMouse(robot.getMousePos().x + mX, robot.getMousePos().y + mY);
 }
 function SendMousePos(mX: number = 0, mY: number = 0) {
-  return robot.getMousePos();
+  let pos =robot.getMousePos()
+  return `${pos.x},${pos.y}`
+  // let pos = Buffer.from(JSON.stringify(robot.getMousePos()));
+  // return new Screenreader(pos, { highWaterMark: 2 });
 }
 
 function DrawCircle(radius: number) {
@@ -59,4 +52,10 @@ function DrawRectangle(widthRec: number, heightRec?: number) {
   robot.mouseToggle("up");
 }
 
-DrawRectangle(200);
+export = {
+  DrawRectangle,
+  DrawCircle,
+  SendMousePos,
+  MouseMove,
+  PrintScreen,
+};
