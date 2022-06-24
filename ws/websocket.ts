@@ -1,5 +1,5 @@
-import { Messagetransform } from "./transform";
-import { WriteMsg } from './write';
+import { Messagetransform } from "../streams/transform";
+import { WriteMsg } from '../streams/write';
 import stream from 'stream';
 import WebSocket from "ws";
 

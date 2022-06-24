@@ -1,31 +1,4 @@
-import Jimp from "jimp";
 import robot from "robotjs";
-
-function PrintScreen() {
-  let pos = robot.getMousePos();
-  let bitmap = robot.screen.capture(pos.x - 100, pos.y - 100, 200, 200).image;
-
-  return new Promise((res, rej) => {
-    new Jimp(
-      { data: bitmap, width: 200, height: 200 },
-      (err: any, image: any) => {
-        image.getBuffer(Jimp.MIME_PNG, (err: any, buffer: any) => {
-          res(buffer.toString("base64"));
-        });
-      }
-    );
-  });
-}
-
-function MouseMove(mX: number = 0, mY: number = 0) {
-  robot.moveMouse(robot.getMousePos().x + mX, robot.getMousePos().y + mY);
-}
-function SendMousePos(mX: number = 0, mY: number = 0) {
-  let pos = robot.getMousePos();
-  return `${pos.x},${pos.y}`;
-  // let pos = Buffer.from(JSON.stringify(robot.getMousePos()));
-  // return new Screenreader(pos, { highWaterMark: 2 });
-}
 
 function DrawCircle(radius: number) {
   const mousePos = robot.getMousePos();
@@ -58,7 +31,4 @@ function DrawRectangle(widthRec: number, heightRec?: number) {
 export = {
   DrawRectangle,
   DrawCircle,
-  SendMousePos,
-  MouseMove,
-  PrintScreen,
 };
