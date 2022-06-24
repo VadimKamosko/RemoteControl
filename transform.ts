@@ -1,5 +1,5 @@
 import { Transform } from "stream";
-import { Switcher } from "./websocket";
+import { Switcher } from "./controller";
 
 
 export class Messagetransform extends Transform {
