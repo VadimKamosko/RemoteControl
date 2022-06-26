@@ -1,6 +1,6 @@
 import {httpServer} from './server/sever'
 import WebSocket from "ws";
-import { onConnect } from './websocket';
+import { onConnect } from './ws/websocket';
 
 const HTTP_PORT = 3000;
 
@@ -15,5 +15,8 @@ const wsServer = new WebSocket.Server({ port: 8080 }, () => {
 
 wsServer.on("connection", onConnect);
 
-
-
+process.on('SIGINT', () => {
+  process.stdout.write('Closing websocket...\n');
+  wsServer.close();
+  process.exit();
+});

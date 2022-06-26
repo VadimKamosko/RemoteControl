@@ -1,5 +1,5 @@
-import { Messagetransform } from "./transform";
-import { WriteMsg } from './write';
+import { Messagetransform } from "../streams/transform";
+import { WriteMsg } from '../streams/write';
 import stream from 'stream';
 import WebSocket from "ws";
 
@@ -11,8 +11,9 @@ export function onConnect(wsClient: WebSocket.WebSocket) {
     const writeMsg = new WriteMsg(wsClient);
     
     console.log("Новый пользователь");
-    wsClient.send("Привет");
+    wsClient.send("Connected");
     wsClient.on("message", function (message: string) {
+      console.log(`Recived: ${message}`);
       readable.push( message );
     });
     readable.pipe(msgTr).pipe(writeMsg);

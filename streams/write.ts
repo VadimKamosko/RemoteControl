@@ -7,12 +7,11 @@ export interface WriteMsg {
 export class WriteMsg extends Writable {
   constructor(wsClient: WebSocket.WebSocket) {
     super();
-    this.wsClient =wsClient;
+    this.wsClient = wsClient;
   }
 
-  _write(chunk:Buffer,encoding: any,callback: () => void) {    
-    this.wsClient.send(chunk.toString())
+  _write(chunk: Buffer, encoding: any, callback: () => void) {
+    this.wsClient.send(chunk.toString("ascii"));
     callback();
   }
-
 }

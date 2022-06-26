@@ -1,5 +1,5 @@
 import { Transform } from "stream";
-import { Switcher } from "./controller";
+import { Switcher } from "../ws/controller";
 
 
 export class Messagetransform extends Transform {
