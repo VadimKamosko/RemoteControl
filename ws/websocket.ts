@@ -13,6 +13,7 @@ export function onConnect(wsClient: WebSocket.WebSocket) {
     console.log("Новый пользователь");
     wsClient.send("Привет");
     wsClient.on("message", function (message: string) {
+      console.log(`Recived: ${message}`);
       readable.push( message );
     });
     readable.pipe(msgTr).pipe(writeMsg);

@@ -1,6 +1,6 @@
 import { getPrintScreen } from "../robot/screen";
-import  draw  from "../robot/draw"
-import mouse from '../robot/mouse'
+import draw from "../robot/draw";
+import mouse from "../robot/mouse";
 
 export async function Switcher(message: string[]) {
   try {
@@ -22,8 +22,9 @@ export async function Switcher(message: string[]) {
         return "mouse_right";
 
       case "mouse_position":
-        // wsClient.send(JSON.stringify(robot.SendMousePos()));
-        return `mouse_position ${mouse.SendMousePos()}`;
+        const ans = `mouse_position ${mouse.SendMousePos()}`;
+        console.log(`Result: ${ans}`);
+        return ans;
 
       case "draw_circle":
         draw.DrawCircle(+message[1]);
@@ -38,13 +39,15 @@ export async function Switcher(message: string[]) {
         return "draw_square";
 
       case "prnt_scrn":
-        let png = await getPrintScreen();
-        return `prnt_scrn ${png}`;
+        const png = await getPrintScreen();
+        const ansPng = `prnt_scrn ${png}`;
+        console.log(`Result: ${ansPng}`);
+        return ansPng;
       default:
-        console.log("Неизвестная команда");
+        console.log("Result: неизвестная команда");
         break;
     }
   } catch (error) {
-    console.log("Ошибка", error);
+    console.log(`Result: ${error}`);
   }
 }
