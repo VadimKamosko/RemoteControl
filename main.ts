@@ -15,4 +15,8 @@ const wsServer = new WebSocket.Server({ port: 8080 }, () => {
 
 wsServer.on("connection", onConnect);
 
-
+process.on('SIGINT', () => {
+  process.stdout.write('Closing websocket...\n');
+  wsServer.close();
+  process.exit();
+});

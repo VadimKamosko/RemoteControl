@@ -24,7 +24,7 @@ export async function Switcher(message: string[]) {
       case "mouse_position":
         const ans = `mouse_position ${mouse.SendMousePos()}`;
         console.log(`Result: ${ans}`);
-        return ans;
+        return ans + '\0';
 
       case "draw_circle":
         draw.DrawCircle(+message[1]);
@@ -42,7 +42,7 @@ export async function Switcher(message: string[]) {
         const png = await getPrintScreen();
         const ansPng = `prnt_scrn ${png}`;
         console.log(`Result: ${ansPng}`);
-        return ansPng;
+        return ansPng + '\0';
       default:
         console.log("Result: неизвестная команда");
         break;
